@@ -1,5 +1,35 @@
+<body>
 <div id="container">
-    <h1>Snake Game</h1>
-    <canvas #screen id="screen"></canvas>
-    <h2>Score: {{ score }}</h2>
+  <canvas #screen id="screen"></canvas>
+
+  <div id="info-container">
+      <p id="score" [ngStyle]="{
+        'color': getScoreColor(),
+        'font-size': getScoreSize()
+      }">
+        Puntaje: {{ score }}
+      </p>
+  </div>
+
+  <div id="info-container">
+      <div id="snake-position-container">
+        <h3>Posiciones de la Serpiente</h3>
+        <ul>
+          <li *ngFor="let part of snake">Posición: ({{ part.x }}, {{ part.y }})</li>
+        </ul>
+      </div>
+  
+
+      <div id="speed-control">
+          <label for="speed">Velocidad:</label>
+          <input id="speed" [(ngModel)]="gameSpeed" type="number" min="50" max="500" (change)="updateGameSpeed()">
+      </div>
+    </div>
+  
+  <div *ngIf="gameOver" class="game-over">
+    <h1>Game Over</h1>
+    <button (click)="restartGame()">Reiniciar</button>
+  </div>
 </div>
+
+</body>

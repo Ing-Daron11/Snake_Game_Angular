@@ -1,16 +1,20 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  standalone: true
+  standalone: true,
+  imports: [FormsModule,CommonModule ],
 })
 export class AppComponent implements AfterViewInit {
   score: number = 0;
   isPaused: boolean = false;
   gameSpeed: number = 250;
   id: any; // ID del setInterval
+  gameOver: boolean = false;
 
   @ViewChild("screen", { static: false })
   canvas!: ElementRef;
@@ -28,12 +32,14 @@ export class AppComponent implements AfterViewInit {
   yVelocity: number = 0;
   foodX!: number;
   foodY!: number;
-  gameOver: boolean = false;
 
   ngAfterViewInit() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
+    this.gameOver;
     if (!this.ctx) {
       console.error("No se pudo obtener el contexto del canvas");
+
+    
       return;
     }
 
@@ -123,10 +129,51 @@ export class AppComponent implements AfterViewInit {
     } else {
       clearInterval(this.id);
       setTimeout(() => {
-        if (confirm("Game Over! ¿Quieres jugar de nuevo?")) {
-          location.reload();
-        }
       }, 100);
     }
   }
+
+
+  restartGame() {
+    this.snake = [
+      { x: 80, y: 0 },
+      { x: 60, y: 0 },
+      { x: 40, y: 0 },
+      { x: 20, y: 0 },
+      { x: 0, y: 0 }
+    ];
+    this.xVelocity = 20;
+    this.yVelocity = 0;
+    this.score = 0;
+    this.gameOver = false;
+    this.createFood();
+    clearInterval(this.id);
+    this.id = setInterval(() => this.gameLoop(), this.gameSpeed);
+    location.reload();
+  }
+
+  updateGameSpeed() {
+    clearInterval(this.id); // Limpia el intervalo actual
+    this.id = setInterval(() => this.gameLoop(), this.gameSpeed); // Crea un nuevo intervalo con la nueva velocidad
+  }
+
+  getScoreColor(): string {
+    if (this.score >= 15) {
+      return 'orange';
+    } else if (this.score >= 10) {
+      return 'green';
+    } else if (this.score >= 5) {
+      return 'blue';
+    } else {
+      return 'black';
+    }
+  }
+  
+  getScoreSize(): string {
+    return `${16 + this.score}px`;
+  }
+
+  
+  
+  
 }

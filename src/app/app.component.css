@@ -4,13 +4,79 @@
     height: 400px;
     outline: 1px solid black;
 }
-
-#container {
+/* Fondo de la página completo */
+html, body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%; margin: 0;
+    padding: 0;
+    background-color: #9af9ebbe; /* Color de fondo uniforme */
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    height: 100vh;
+    
 }
 
-h1 {
-    color: green;
+/* Contenedor principal */
+#container {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espaciado entre el canvas y la info */
+}
+
+/* Puntaje y posiciones a la derecha del juego */
+#info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Puntaje justo a la derecha del canvas */
+#score {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* Caja de posiciones */
+#snake-position-container {
+    width: 200px;
+    height: 150px;
+    overflow-y: auto;
+    border: 2px solid black;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    text-align: left;
+}
+
+/* Input de velocidad debajo de posiciones */
+#speed-control {
+    margin-top: 10px;
+}
+
+/* Input de velocidad */
+input {
+    width: 80px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* Botón de reinicio */
+.game-over button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.game-over button:hover {
+    background-color: darkred;
 }
